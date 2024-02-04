@@ -10,6 +10,7 @@ def home(page: ft.Page):
     return ft.View(
         route=routes.HOME,
         appbar=ft.AppBar(title=ft.Text('Home')),
+        padding=ft.padding.all(16),
         floating_action_button=ft.FloatingActionButton(
             icon=ft.icons.ADD,
             on_click=on_click

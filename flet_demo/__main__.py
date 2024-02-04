@@ -17,7 +17,6 @@ def main(page: ft.Page):
         page.views.pop()
         page.go(page.views[-1].route)
 
-    page.padding = ft.padding.all(16)
     page.on_route_change = on_route_change
     page.on_view_pop = on_view_pop
     page.go(page.route)
