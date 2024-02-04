@@ -1,9 +1,34 @@
 import flet as ft
 
 from flet_demo import routes
+from flet_demo.repository import repository
+
+
+def _tags(tags):
+    if len(tags) > 0:
+        return [ft.Row(
+            wrap=True,
+            spacing=8,
+            run_spacing=8,
+            controls=[ft.Chip(label=ft.Text(e)) for e in e.tags]
+        )]
+    return []
 
 
 def home(page: ft.Page):
+    users = [
+        ft.Card(
+            content=ft.Container(
+                padding=16,
+                content=ft.Column(
+                    spacing=12,
+                    controls=[ft.Text("%s %s" % (e.first_name, e.last_name), size=24)] + _tags(e.tags)
+                )
+            )
+        )
+        for e in repository.find_all()
+    ]
+
     def on_click(e):
         page.go(routes.POST)
 
@@ -16,5 +41,8 @@ def home(page: ft.Page):
             on_click=on_click
         ),
         controls=[
+            ft.ListView(
+                controls=users,
+            )
         ]
     )

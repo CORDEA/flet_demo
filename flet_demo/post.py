@@ -1,6 +1,7 @@
 import flet as ft
 
 from flet_demo import routes
+from flet_demo.repository import repository
 from flet_demo.user import User
 
 
@@ -32,6 +33,7 @@ def post(page: ft.Page):
         page.update()
 
     def on_click(e):
+        repository.insert(user)
         page.views.pop()
         page.go(page.views[-1].route)
 
