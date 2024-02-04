@@ -16,9 +16,16 @@ def _tags(tags):
 
 
 def home(page: ft.Page):
+    def on_card_click(e):
+        page.go(routes.DETAILS.replace(':id', '1'))
+
+    def on_click(e):
+        page.go(routes.POST)
+
     users = [
         ft.Card(
             content=ft.Container(
+                on_click=on_card_click,
                 padding=16,
                 content=ft.Column(
                     spacing=12,
@@ -28,10 +35,6 @@ def home(page: ft.Page):
         )
         for e in repository.find_all()
     ]
-
-    def on_click(e):
-        page.go(routes.POST)
-
     return ft.View(
         route=routes.HOME,
         appbar=ft.AppBar(title=ft.Text('Home')),
@@ -41,8 +44,6 @@ def home(page: ft.Page):
             on_click=on_click
         ),
         controls=[
-            ft.ListView(
-                controls=users,
-            )
+            ft.ListView(controls=users)
         ]
     )
