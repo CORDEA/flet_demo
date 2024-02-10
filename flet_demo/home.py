@@ -10,7 +10,7 @@ def _tags(tags):
             wrap=True,
             spacing=8,
             run_spacing=8,
-            controls=[ft.Chip(label=ft.Text(e)) for e in e.tags]
+            controls=[ft.Chip(label=ft.Text(e)) for e in tags]
         )]
     return []
 
