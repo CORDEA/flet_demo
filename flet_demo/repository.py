@@ -7,9 +7,8 @@ class Repository:
     def find_all(self) -> list[User]:
         return self._users
 
-    def find(self, uid: int) -> User:
-        # FIXME
-        return self._users[0]
+    def find(self, uid: str) -> User:
+        return next(filter(lambda user: user.id == uid, self._users))
 
     def insert(self, user: User):
         self._users.append(user)

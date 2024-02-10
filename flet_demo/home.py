@@ -16,8 +16,8 @@ def _tags(tags):
 
 
 def home(page: ft.Page):
-    def on_card_click(e):
-        page.go(routes.DETAILS.replace(':id', '1'))
+    def on_card_click(e: ft.ControlEvent):
+        page.go(routes.DETAILS.replace(':id', e.control.key))
 
     def on_click(e):
         page.go(routes.POST)
@@ -25,6 +25,7 @@ def home(page: ft.Page):
     users = [
         ft.Card(
             content=ft.Container(
+                key=e.id,
                 on_click=on_card_click,
                 padding=16,
                 content=ft.Column(

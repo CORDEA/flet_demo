@@ -1,3 +1,5 @@
+import uuid
+
 import flet as ft
 
 from flet_demo import routes
@@ -6,7 +8,7 @@ from flet_demo.user import User
 
 
 def post(page: ft.Page):
-    user = User(first_name='', last_name='', email='', phone='', tags=[])
+    user = User(id=uuid.uuid4().hex, first_name='', last_name='', email='', phone='', tags=[])
     tags = []
 
     def on_first_name_change(e: ft.ControlEvent):
