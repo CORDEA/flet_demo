@@ -14,14 +14,28 @@ def post(page: ft.Page):
     def on_first_name_change(e: ft.ControlEvent):
         user.first_name = e.control.value
 
+    first_name = ft.TextField(hint_text='First name', on_change=on_first_name_change)
+
     def on_last_name_change(e: ft.ControlEvent):
         user.last_name = e.control.value
+
+    last_name = ft.TextField(hint_text='Last name', on_change=on_last_name_change)
 
     def on_email_change(e: ft.ControlEvent):
         user.email = e.control.value
 
+    email = ft.TextField(hint_text='Email', on_change=on_email_change)
+
     def on_phone_change(e: ft.ControlEvent):
         user.phone = e.control.value
+
+    phone = ft.TextField(
+        hint_text='Phone',
+        on_change=on_phone_change,
+        input_filter=ft.InputFilter(
+            regex_string=r'[\d\+]'
+        )
+    )
 
     def on_tag_click(e: ft.ControlEvent):
         user.tags.remove(e.control.value)
@@ -35,6 +49,30 @@ def post(page: ft.Page):
         page.update()
 
     def on_click(e):
+        has_err = False
+        if len(user.first_name) <= 0:
+            first_name.error_text = 'The value is required'
+            has_err = True
+        else:
+            first_name.error_text = ''
+        if len(user.last_name) <= 0:
+            last_name.error_text = 'The value is required'
+            has_err = True
+        else:
+            last_name.error_text = ''
+        if len(user.email) <= 0:
+            email.error_text = 'The value is required'
+            has_err = True
+        else:
+            email.error_text = ''
+        if len(user.phone) <= 0:
+            phone.error_text = 'The value is required'
+            has_err = True
+        else:
+            phone.error_text = ''
+        if has_err:
+            page.update()
+            return
         repository.insert(user)
         page.views.pop()
         page.go(page.views[-1].route)
@@ -52,17 +90,11 @@ def post(page: ft.Page):
                 expand=1,
                 spacing=16,
                 controls=[
-                    ft.TextField(hint_text='First name', on_change=on_first_name_change),
-                    ft.TextField(hint_text='Last name', on_change=on_last_name_change),
+                    first_name,
+                    last_name,
                     ft.VerticalDivider(),
-                    ft.TextField(hint_text='Email', on_change=on_email_change),
-                    ft.TextField(
-                        hint_text='Phone',
-                        on_change=on_phone_change,
-                        input_filter=ft.InputFilter(
-                            regex_string=r'[\d\+]'
-                        )
-                    ),
+                    email,
+                    phone,
                     ft.VerticalDivider(),
                     ft.TextField(hint_text='Tag', on_submit=on_tag_submit),
                     ft.Row(
