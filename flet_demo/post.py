@@ -56,7 +56,13 @@ def post(page: ft.Page):
                     ft.TextField(hint_text='Last name', on_change=on_last_name_change),
                     ft.VerticalDivider(),
                     ft.TextField(hint_text='Email', on_change=on_email_change),
-                    ft.TextField(hint_text='Phone', on_change=on_phone_change),
+                    ft.TextField(
+                        hint_text='Phone',
+                        on_change=on_phone_change,
+                        input_filter=ft.InputFilter(
+                            regex_string=r'[\d\+]'
+                        )
+                    ),
                     ft.VerticalDivider(),
                     ft.TextField(hint_text='Tag', on_submit=on_tag_submit),
                     ft.Row(
